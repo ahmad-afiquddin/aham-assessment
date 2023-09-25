@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { getPortfolio } from "../../utils/portfolio";
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
@@ -20,10 +21,19 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  const portfolio = await getPortfolio(event.context.user?.id);
+
+  if (!portfolio) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: "Portfolio not found",
+    });
+  }
+
   let investment = await prisma.investment.findUnique({
     where: {
       portfolioId_fundId: {
-        portfolioId: event.context.portfolio?.id,
+        portfolioId: portfolio.id,
         fundId,
       },
     },
@@ -32,7 +42,7 @@ export default defineEventHandler(async (event) => {
   if (!investment?.id) {
     investment = await prisma.investment.create({
       data: {
-        portfolioId: event.context.portfolio?.id,
+        portfolioId: portfolio.id,
         fundId,
         units: parseInt(units),
         averagePrice: currentValue?.value,
@@ -42,7 +52,7 @@ export default defineEventHandler(async (event) => {
     investment = await prisma.investment.update({
       where: {
         portfolioId_fundId: {
-          portfolioId: event.context.portfolio?.id,
+          portfolioId: portfolio.id,
           fundId,
         },
       },

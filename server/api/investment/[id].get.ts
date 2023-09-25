@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import { getPortfolio } from "../../utils/portfolio";
+
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
@@ -12,6 +14,8 @@ export default defineEventHandler(async (event) => {
     },
   });
 
+  const portfolio = await getPortfolio(event.context.user.id);
+
   if (!fund) {
     throw createError({
       statusCode: 404,
@@ -19,7 +23,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  if (!event.context.portfolio) {
+  if (!portfolio) {
     throw createError({
       statusCode: 404,
       statusMessage: "User portfolio does not exist",
@@ -29,7 +33,7 @@ export default defineEventHandler(async (event) => {
   const investment = await prisma.investment.findFirst({
     where: {
       fundId: parseInt(fundId),
-      portfolioId: event.context.portfolio?.id,
+      portfolioId: portfolio?.id,
     },
     include: {
       fund: true,
