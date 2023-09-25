@@ -1,15 +1,12 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 import { compare } from "bcrypt";
 import { generateToken } from "~/server/utils/token";
 import { setCookie } from "h3";
 const prisma = new PrismaClient();
 
-interface ReturnedUser {
-  firstName: string;
-  lastName: string;
-  email: string;
+type UserWithoutPassword = User & {
   password?: string;
-}
+};
 
 export default defineEventHandler(async (event) => {
   const { email, password } = await readBody(event);
@@ -30,9 +27,13 @@ export default defineEventHandler(async (event) => {
     throw new Error("Password does not match!");
   }
 
-  delete (user as ReturnedUser).password;
+  const returnedUser: UserWithoutPassword = {
+    ...user,
+  };
 
-  const token = generateToken(user);
+  delete returnedUser.password;
+
+  const token = generateToken(returnedUser);
   setCookie(event, "__session", token);
 
   return user;
