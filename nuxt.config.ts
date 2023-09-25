@@ -20,7 +20,10 @@ export default defineNuxtConfig({
       },
     ],
   ],
-  css: ["@/public/css/main.scss"],
+  css: [
+    "@/public/css/main.scss",
+    "vue-toast-notification/dist/theme-default.css",
+  ],
   vite: {
     plugins: [svgLoader()],
   },

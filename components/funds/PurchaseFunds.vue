@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import CloseIcon from "~icons/ep/close";
+const { $toast } = useNuxtApp();
 
 interface Props {
   id: number;
@@ -22,10 +23,12 @@ async function submitPurchase() {
     },
   }).catch((error) => {
     console.error(error.data);
+    $toast?.error(error.data?.message);
   });
 
   if (purchase) {
     emit("update");
+    $toast?.success("Fund purchased!");
   }
 
   isLoading.value = false;

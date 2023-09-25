@@ -33,7 +33,8 @@ withDefaults(defineProps<Props>(), {
   padding: var(--padding-default);
   font-family: var(--text-secondary);
   font-size: var(--text-lg);
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-accent-dark);
+  border: 1px solid var(--bg-accent-darker);
   border-radius: var(--padding-default);
   overflow: hidden;
   cursor: pointer;

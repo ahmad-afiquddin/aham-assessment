@@ -233,3 +233,19 @@ a {
     }
   }
 }
+
+.v-toast__item {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-family: var(--text-secondary) !important;
+}
+
+.v-toast__item--error {
+  background-color: var(--bg-accent-red) !important;
+}
+
+.v-toast__item--success {
+  background-color: var(--bg-accent-green) !important;
+}
+
+

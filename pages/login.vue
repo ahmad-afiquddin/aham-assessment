@@ -3,6 +3,7 @@ import TopRight from "~icons/ep/top-right";
 import BottomLeft from "~icons/ep/bottom-left";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength, sameAs } from "@vuelidate/validators";
+const { $toast } = useNuxtApp();
 const userStorage = useUser();
 
 const loginForm = reactive({
@@ -54,11 +55,13 @@ async function submitLogin() {
       body: loginForm,
     }).catch((error) => {
       console.error(error.data);
+      $toast?.error(error.data?.message);
     });
 
     isLoading.value = false;
 
     data && userStorage.storeUser(data);
+    data && $toast?.success("Logged in!");
     data && (await navigateTo("/"));
   }
 }
@@ -73,11 +76,13 @@ async function submitRegister() {
       body: registerForm,
     }).catch((error) => {
       console.error(error.data);
+      $toast?.error(error.data?.message);
     });
 
     isLoading.value = false;
 
     data && userStorage.storeUser(data);
+    data && $toast?.success("Registered!");
     data && (await navigateTo("/"));
   }
 }
