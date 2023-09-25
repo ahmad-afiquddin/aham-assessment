@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  firstName String
+  lastName  String
+  status    String     @default("active")
+  email     String     @unique
+  password  String
+  portfolio Portfolio?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?
+}
+
+model Portfolio {
+  id          Int          @id @default(autoincrement())
+  ownerId     Int          @unique
+  owner       User         @relation(fields: [ownerId], references: [id])
+  investments Investment[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?
+}
+
+model Investment {
+  id           Int        @id @default(autoincrement())
+  units        Int
+  averagePrice Float
+  portfolioId  Int
+  portfolio    Portfolio  @relation(fields: [portfolioId], references: [id])
+  fundId       Int
+  fund         Fund       @relation(fields: [fundId], references: [id])
+  purchases    Purchase[]
+
+  @@unique([portfolioId, fundId])
+}
+
+model Purchase {
+  id           Int        @id @default(autoincrement())
+  units        Int
+  fundId       Int
+  fund         Fund       @relation(fields: [fundId], references: [id])
+  valueId      Int
+  value        Value      @relation(fields: [valueId], references: [id])
+  investmentId Int
+  investment   Investment @relation(fields: [investmentId], references: [id])
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime?
+}
+
+model Fund {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String
+  value       Float
+  difference  Float
+  typeId      Int
+  type        FundType     @relation(fields: [typeId], references: [id])
+  investments Investment[]
+  purchases   Purchase[]
+  values      Value[]
+}
+
+model FundType {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+  funds       Fund[]
+}
+
+model Value {
+  id        Int        @id @default(autoincrement())
+  value     Float
+  fundId    Int
+  fund      Fund       @relation(fields: [fundId], references: [id])
+  purchases Purchase[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?
+}
+
+model ActivityLog {
+  id        Int       @id @default(autoincrement())
+  entity    String
+  entityId  Int
+  action    String
+  data      Json
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+}

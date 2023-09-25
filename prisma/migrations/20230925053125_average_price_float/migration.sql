@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Investment" ALTER COLUMN "averagePrice" SET DATA TYPE DOUBLE PRECISION;

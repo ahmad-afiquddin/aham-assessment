@@ -1,0 +1,48 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npx prisma generate && nuxt build",
+    "dev": "npx prisma generate && nuxt dev",
+    "generate": "npx prisma generate && nuxt generate",
+    "preview": "npx prisma generate && nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint:fix": "prettier --write --list-different . && eslint --ext \".ts,.vue\" --ignore-path .gitignore ."
+  },
+  "devDependencies": {
+    "@iconify/json": "^2.2.119",
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.3",
+    "@types/vuelidate": "^0.7.18",
+    "@typescript-eslint/parser": "^6.7.2",
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "nuxt": "^3.7.3",
+    "prettier": "^3.0.3",
+    "prisma": "^5.3.1",
+    "sass": "^1.68.0",
+    "typescript": "^5.2.2",
+    "unplugin-icons": "^0.17.0",
+    "vite-svg-loader": "^4.0.0",
+    "vue3-marquee": "^4.1.0"
+  },
+  "dependencies": {
+    "@nuxtjs/eslint-module": "^4.1.0",
+    "@prisma/client": "^5.3.1",
+    "@types/bcrypt": "^5.0.0",
+    "apexcharts": "^3.42.0",
+    "bcrypt": "^5.1.1",
+    "dayjs": "^1.11.10",
+    "express": "^4.18.2",
+    "vue-multiselect": "^2.1.7",
+    "vue3-apexcharts": "^1.4.4"
+  }
+}
