@@ -52,11 +52,12 @@ async function submitSale() {
   <GridWrapper :span="2" :mobile="6">
     <Button
       :is-loading="isLoading"
-      :disabled="sellUnits < 1"
+      :disabled="sellUnits < 1 || sellUnits > units"
       @click="submitSale"
     >
       <template v-if="sellUnits > 0"> Sell {{ sellUnits }} unit(s) </template>
       <template v-if="sellUnits < 1">Minimum 1 unit</template>
+      <template v-if="sellUnits > units">Maximum {{ units }} units</template>
     </Button>
   </GridWrapper>
 </template>
