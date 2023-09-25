@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { compare } from "bcrypt";
 import { generateToken } from "~/server/utils/token";
+import { setCookie } from "h3";
 const prisma = new PrismaClient();
 
 interface ReturnedUser {

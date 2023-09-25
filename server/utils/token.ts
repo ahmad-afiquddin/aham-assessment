@@ -1,5 +1,6 @@
 import { User } from "@prisma/client";
 import jwt from "jsonwebtoken";
+import { parseCookies } from "h3";
 
 type UserWithoutPassword = User & {
   password?: string;
@@ -30,13 +31,14 @@ export function verifyToken(token: string) {
 }
 
 export function getUserToken(event: any) {
-  const cookie = getCookie(event, "__session");
-  if (!cookie) {
-    return null;
-  }
-  const token = verifyToken(cookie);
+  const cookies = parseCookies(event);
+  const token = cookies?.__session;
   if (!token) {
     return null;
   }
-  return token;
+  const user = verifyToken(token);
+  if (!user) {
+    return null;
+  }
+  return user;
 }

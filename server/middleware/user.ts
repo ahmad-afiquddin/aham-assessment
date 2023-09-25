@@ -1,6 +1,6 @@
 import { getUserToken } from "../utils/token";
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler((event) => {
   // ...
   const user = getUserToken(event);
 
