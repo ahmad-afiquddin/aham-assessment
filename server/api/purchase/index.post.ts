@@ -20,14 +20,16 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  let investment = await prisma.investment.findFirst({
+  let investment = await prisma.investment.findUnique({
     where: {
-      fundId,
-      portfolioId: event.context.portfolio?.id,
+      portfolioId_fundId: {
+        portfolioId: event.context.portfolio?.id,
+        fundId,
+      },
     },
   });
 
-  if (!investment) {
+  if (!investment?.id) {
     investment = await prisma.investment.create({
       data: {
         portfolioId: event.context.portfolio?.id,
