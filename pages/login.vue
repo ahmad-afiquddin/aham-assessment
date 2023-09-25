@@ -113,7 +113,9 @@ definePageMeta({
           />
         </GridWrapper>
         <GridWrapper :span="2" :mobile="6" :tablet="6">
-          <Button :is-loading="isLoading" @click="submitLogin">Login <BottomLeft /></Button>
+          <Button :is-loading="isLoading" @click="submitLogin"
+            >Login <BottomLeft
+          /></Button>
         </GridWrapper>
       </GridWrapper>
     </form>
@@ -162,7 +164,9 @@ definePageMeta({
           />
         </GridWrapper>
         <GridWrapper :span="2" :mobile="6" :tablet="3">
-          <Button :is-loading="isLoading" @click="submitRegister">Register <TopRight /></Button>
+          <Button :is-loading="isLoading" @click="submitRegister"
+            >Register <TopRight
+          /></Button>
         </GridWrapper>
       </GridWrapper>
     </form>

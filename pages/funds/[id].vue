@@ -103,7 +103,7 @@ await getInvestment();
           <th>Date</th>
         </tr>
         <tr v-else>
-          <th>nbsp;</th>
+          <th>&nbsp;</th>
         </tr>
         <template v-if="investment?.purchases?.length">
           <tr v-for="purchase in investment?.purchases" :key="purchase.id">
