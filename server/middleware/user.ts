@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
     event.context.user = user;
 
     const portfolio = await getPortfolio((user as unknown as User)?.id);
+    console.log(portfolio);
 
     if (portfolio) {
       event.context.portfolio = portfolio;
