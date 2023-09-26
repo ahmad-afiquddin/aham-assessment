@@ -49,6 +49,13 @@ export default defineEventHandler(async (event) => {
       },
     });
   } else {
+    if (investment.units + parseInt(units) < 0) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: "Insufficient funds to sell!",
+      });
+    }
+
     investment = await prisma.investment.update({
       where: {
         portfolioId_fundId: {
