@@ -1,12 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import { hash } from "bcrypt";
+import { generateToken } from "~/server/utils/token";
 const prisma = new PrismaClient();
 
-interface ReturnedUser {
+interface UserWithoutPassword {
+  id: number;
   firstName: string;
   lastName: string;
+  status: string;
   email: string;
   password?: string;
+  createdAt: Date;
+  updatedAt: Date | null;
 }
 
 export default defineEventHandler(async (event) => {
@@ -39,6 +44,14 @@ export default defineEventHandler(async (event) => {
     },
   });
 
-  delete (user as ReturnedUser).password;
+  const returnedUser: UserWithoutPassword = {
+    ...user,
+  };
+
+  delete returnedUser.password;
+
+  const token = generateToken(returnedUser);
+  setCookie(event, "authToken", token);
+
   return user;
 });
