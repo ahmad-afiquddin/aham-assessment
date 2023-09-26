@@ -20,6 +20,28 @@ yarn install
 bun install
 ```
 
+## Environment variables
+
+Create a new file in the root directory called .env and add these in
+
+```
+DATABASE_URL=<YOUR DATABASE CONNECTION STRING>
+TOKEN_SECRET=<JWT_TOKEN_SECRET>
+TOKEN_EXPIRATION=<JWT LIVE PERIOD>
+```
+
+## Database migrations
+
+Since this project is a fullstack app, you will need to run migrations to your database, and generate a prisma client before running the web app
+
+```
+# run migrations
+npx prisma migrate dev
+
+# generate prisma client
+npx prisma generate
+```
+
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
