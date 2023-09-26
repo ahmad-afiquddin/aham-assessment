@@ -60,7 +60,7 @@ export default defineEventHandler(async (event) => {
         units: investment.units + parseInt(units),
         averagePrice: getNewAverage(
           investment.units,
-          investment.averagePrice,
+          investment?.averagePrice || currentValue.value,
           parseInt(units),
           currentValue.value,
         ),
