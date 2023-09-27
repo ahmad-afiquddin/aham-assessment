@@ -100,6 +100,9 @@ function getNewAverage(
   addedUnits: number,
   newPrice: number,
 ): number {
+  if (oldUnits + addedUnits < 1) {
+    return 0;
+  }
   return (
     (oldUnits * oldPrice + addedUnits * newPrice) / (oldUnits + addedUnits)
   );
