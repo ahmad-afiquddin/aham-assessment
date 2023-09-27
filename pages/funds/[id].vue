@@ -121,7 +121,7 @@ await getInvestment();
       <Loading v-else />
     </GridWrapper>
     <SellFunds
-      v-if="fund && investment?.purchases?.length"
+      v-if="fund && investment.units && investment?.purchases?.length"
       :id="fund?.id"
       :value="fund?.value"
       :units="investment.units"
