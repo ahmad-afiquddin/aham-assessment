@@ -19,7 +19,7 @@ async function submitPurchase() {
     method: "POST",
     body: {
       fundId: props.id,
-      units: units.value,
+      units: Math.floor(units.value),
     },
   }).catch((error) => {
     console.error(error.data);
@@ -47,18 +47,20 @@ async function submitPurchase() {
       </div>
       <div>
         <h2>Total</h2>
-        <p>MYR {{ Math.round(units * value * 10000) / 10000 }}</p>
+        <p>MYR {{ Math.round(Math.floor(units) * value * 10000) / 10000 }}</p>
       </div>
     </div>
   </Card>
   <GridWrapper :span="2" :mobile="6">
     <Button
       :is-loading="isLoading"
-      :disabled="units < 1"
+      :disabled="Math.floor(units) < 1"
       @click="submitPurchase"
     >
-      <template v-if="units > 0"> Purchase {{ units }} unit(s) </template>
-      <template v-if="units < 1">Minimum 1 unit</template>
+      <template v-if="Math.floor(units) > 0">
+        Purchase {{ Math.floor(units) }} unit(s)
+      </template>
+      <template v-if="Math.floor(units) < 1">Minimum 1 unit</template>
     </Button>
   </GridWrapper>
 </template>

@@ -20,7 +20,7 @@ async function submitSale() {
     method: "POST",
     body: {
       fundId: props.id,
-      units: -sellUnits.value,
+      units: -Math.floor(sellUnits.value),
     },
   }).catch((error) => {
     console.error(error.data);
@@ -55,12 +55,16 @@ async function submitSale() {
   <GridWrapper :span="2" :mobile="6">
     <Button
       :is-loading="isLoading"
-      :disabled="sellUnits < 1 || sellUnits > units"
+      :disabled="Math.floor(sellUnits) < 1 || Math.floor(sellUnits) > units"
       @click="submitSale"
     >
-      <template v-if="sellUnits > 0"> Sell {{ sellUnits }} unit(s) </template>
-      <template v-if="sellUnits < 1">Minimum 1 unit</template>
-      <template v-if="sellUnits > units">Maximum {{ units }} units</template>
+      <template v-if="Math.floor(sellUnits) > 0">
+        Sell {{ Math.floor(sellUnits) }} unit(s)
+      </template>
+      <template v-if="Math.floor(sellUnits) < 1">Minimum 1 unit</template>
+      <template v-if="Math.floor(sellUnits) > units"
+        >Maximum {{ units }} units</template
+      >
     </Button>
   </GridWrapper>
 </template>
